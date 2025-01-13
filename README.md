@@ -14,8 +14,8 @@ highlighting the chromosome with most errors.
 
 ## Installation
 
-1. clone this repository to your computer; 
-2. download and install Miniconda using this [link] (https://www.anaconda.com/download/success "https://www.anaconda.com/download/success"), 
+1. clone this repository to your computer
+2. download and install Miniconda using this link: https://www.anaconda.com/download/success
 3. use the .yaml file to create an envrionment:
 
 ``` sh
@@ -28,13 +28,13 @@ python disomy_test.py fid iid father_id mother_id --directory sample_folder
 ```
 Where:
 
-positional arguments:
-  fid                   family ID.
-  iid                   individual ID.
-  father_id             paternal ID.
-  mother_id             maternal ID.
-
-options:
-  -h, --help            show this help message and exit
-  --directory DIRECTORY
-                        Directory containing the .ped files. Default is the current directory.
+>positional arguments:
+>  fid                   family ID.
+>  iid                   individual ID.
+>  father_id             paternal ID.
+>  mother_id             maternal ID.
+>
+>options:
+>  -h, --help            show this help message and exit
+>  --directory DIRECTORY
+>                        Directory containing the .ped files. Default is the current directory.
