@@ -1,7 +1,8 @@
 name: disomy_test
 channels:
-  - conda-forge
   - bioconda
+  - defaults
+  - conda-forge
   - r
 dependencies:
   - python=3.11
@@ -11,4 +12,4 @@ dependencies:
   - r-BiocManager
   - r-readr
   - rpy2
-  - plink=1.90b6.18
+  - plink
