@@ -35,13 +35,16 @@ Where:
 
 ```plaintext
 positional arguments:
+
 fid                   family ID.
 iid                   individual ID.
 father_id             paternal ID.
 mother_id             maternal ID.
->
->options:
+
+options:
+
 -h, --help            show this help message and exit
 --directory DIRECTORY
-                      Directory containing the .ped files. Default is the current directory.
+                      Directory containing the .ped files. Default is the 
+                      current directory.
 ```
