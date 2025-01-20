@@ -93,7 +93,7 @@ def mendel_check(directory):
     #print("Output:", result.stdout)
     #print("Errors:", result.stderr)
 
-def add_coords(directory):
+def add_coords(directory, prop_errors):
 
     files = os.listdir(directory)
 
@@ -122,7 +122,7 @@ def add_coords(directory):
     total_count = sorted_df['count'].sum()
 
     sorted_df['prop'] = sorted_df['count']/total_count
-    chr_to_plot = sorted_df[sorted_df['prop'] > 0.5]['chr']
+    chr_to_plot = sorted_df[sorted_df['prop'] >= prop_errors]['chr']
 
     filtered_df = merged_df[merged_df['chr'].isin(chr_to_plot)]
 
@@ -172,17 +172,17 @@ def plot_idiogram(directory):
     args = c("{directory}")
 
     mendel_check = readr::read_csv2(paste0(args[1], "/plot_chr.csv"))
-
+    
     mendel_check_bed = mendel_check |> 
-      regioneR::toGRanges(y = NA)
-
+    regioneR::toGRanges(y = NA)
+    
     png(filename = paste0(args[1], "/idiogram.png"), 
         width = 800, 
         height = 600)
     p1 = karyoploteR::plotKaryotype(genome="hg19",
-                               plot.type = 1,
-                               chromosomes = unique(mendel_check$chr)) |>
-      karyoploteR::kpPoints(mendel_check_bed,
+                            plot.type = 1,
+                            chromosomes = unique(mendel_check$chr)) |>
+    karyoploteR::kpPoints(mendel_check_bed,
                             data.panel = 1,
                             pch = 15,
                             y = 0.001,
@@ -194,8 +194,13 @@ def plot_idiogram(directory):
     robjects.r(r_code)
 
 def main():
+
+    import os
+    import pandas as pd
+
     parser = argparse.ArgumentParser(description="Run PLINK commands for disomy tests.")
     parser.add_argument('--directory', type=str, default='.', help="Directory containing the .ped files. Default is the current directory.")
+    parser.add_argument('--prop_errors', type=bool, default=0.50, help="Minimum proportion of mendelian errors in a single chromosome to plot idiogram. Default is 0.50")
     parser.add_argument('fid', type=str, help="New family ID.")
     parser.add_argument('iid', type=str, help="New within-family ID.")
     parser.add_argument('father_id', type=str, help="New paternal within-family ID.")
@@ -207,9 +212,17 @@ def main():
     merge_fam(args.directory)
     update_ids(args.directory, args.fid, args.iid, args.father_id, args.mother_id)
     mendel_check(args.directory)
-    add_coords(args.directory)
+    add_coords(args.directory, args.prop_errors)
     create_pie_chart(args.directory)
-    plot_idiogram(args.directory)
+
+    df = pd.read_csv(os.path.join(args.directory, 'plot_chr.csv'))
+                
+    if df.shape[0] > 0:
+        plot_idiogram(args.directory)
+    else:
+        print('No disomy detected!')
+
+        
 
 if __name__ == "__main__":
     main()
