@@ -3,7 +3,7 @@ import subprocess
 import pandas as pd
 import matplotlib.pyplot as plt
 import argparse
-import rpy2.robjects as robjects
+#import rpy2.robjects as robjects
 
 def create_merge_list(directory):
     #list all files in the directory

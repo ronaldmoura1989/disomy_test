@@ -35,7 +35,7 @@ conda activate disomy_test
 5. place the folder with your files inside this folder and hit the following commnad:
 
 ``` sh
-python disomy_test.py fid iid father_id mother_id --directory sample_folder
+python disomy_test.py fid iid father_id mother_id --directory sample_folder --prop_errors 0.50
 ```
 Where:
 
