@@ -8,8 +8,9 @@ dependencies:
   - python=3.11
   - pandas
   - matplotlib
-  - r-base
-  - r-BiocManager
-  - r-readr
-  - rpy2
+  - psycopg2
+  - r-base=4.4.0
+  #- r-BiocManager=3.19
+  #- r-readr
+  #- rpy2
   - plink

@@ -26,7 +26,13 @@ conda env create -f environment.yml
 >alternative is to download the installer directly from the PLINK website and add it 
 >to the PATH.
 
-4. place the folder with your files inside this folder and hit the following commnad:
+4. change to the environment by using:
+
+``` sh
+conda activate disomy_test
+```
+
+5. place the folder with your files inside this folder and hit the following commnad:
 
 ``` sh
 python disomy_test.py fid iid father_id mother_id --directory sample_folder
@@ -47,4 +53,8 @@ options:
 --directory DIRECTORY
                       Directory containing the .ped files. Default is the 
                       current directory.
+
+--prop_errors PROP_ERRORS
+                      Minimum proportion of mendelian errors in a single 
+                      chromosome to plot idiogram. Default is 0.50.
 ```

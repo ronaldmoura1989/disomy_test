@@ -149,58 +149,57 @@ def create_pie_chart(directory):
     plt.savefig(os.path.join(directory, 'donut_chart.png'))
     plt.close()
 
-    # Caminho para o script R
-    #r_script_path = 'plot_idiogram.R'
+def plot_idiogram(directory):
 
-    # B sure that Rscript is in the PATH
-    #command = ['Rscript', r_script_path, directory]
+    # path to R script
+    r_script_path = 'plot_idiogram.R'
 
-    # Executar o comando
-    #result = subprocess.run(command, capture_output=True, text=True)
+    # Be sure that Rscript is in the PATH
+    command = ['Rscript', r_script_path, directory]
+
+    # Run command
+    result = subprocess.run(command, capture_output=True, text=True)
 
     # Verificar a saída e erros
-    #print("Output:", result.stdout)
-    #print("Errors:", result.stderr)
+    print("Output:", result.stdout)
+    print("Errors:", result.stderr)
 
-def plot_idiogram(directory):
-    r_code = f"""
-    if (!require("karyoploteR", quietly = TRUE))
-      BiocManager::install("karyoploteR", 
-                           ask = FALSE,
-                           verbose = FALSE)
 
-    args = c("{directory}")
-
-    mendel_check = readr::read_csv2(paste0(args[1], "/plot_chr.csv"))
+    #r_code = f"""
+    #if (!require("karyoploteR", quietly = TRUE))
+    #  BiocManager::install("karyoploteR", 
+    #                       ask = FALSE,
+    #                       verbose = FALSE)
     
-    mendel_check_bed = mendel_check |> 
-    regioneR::toGRanges(y = NA)
+    #args = c("{directory}")
+
+    #mendel_check = readr::read_csv2(paste0(args[1], "/plot_chr.csv"))
     
-    png(filename = paste0(args[1], "/idiogram.png"), 
-        width = 800, 
-        height = 600)
-    p1 = karyoploteR::plotKaryotype(genome="hg19",
-                            plot.type = 1,
-                            chromosomes = unique(mendel_check$chr)) |>
-    karyoploteR::kpPoints(mendel_check_bed,
-                            data.panel = 1,
-                            pch = 15,
-                            y = 0.001,
-                            cex = 0.5)
-    dev.off()
-    """
+    #mendel_check_bed = mendel_check |> 
+    #regioneR::toGRanges(y = NA)
+    
+    #png(filename = paste0(args[1], "/idiogram.png"), 
+    #    width = 800, 
+    #    height = 600)
+    #p1 = karyoploteR::plotKaryotype(genome="hg19",
+    #                        plot.type = 1,
+    #                        chromosomes = unique(mendel_check$chr)) |>
+    #karyoploteR::kpPoints(mendel_check_bed,
+    #                        data.panel = 1,
+    #                        pch = 15,
+    #                        y = 0.001,
+    #                        cex = 0.5)
+    #dev.off()
+    #"""
 
     # Executa o código R
-    robjects.r(r_code)
+    # robjects.r(r_code)
 
 def main():
 
-    import os
-    import pandas as pd
-
     parser = argparse.ArgumentParser(description="Run PLINK commands for disomy tests.")
     parser.add_argument('--directory', type=str, default='.', help="Directory containing the .ped files. Default is the current directory.")
-    parser.add_argument('--prop_errors', type=bool, default=0.50, help="Minimum proportion of mendelian errors in a single chromosome to plot idiogram. Default is 0.50")
+    parser.add_argument('--prop_errors', type=bool, default=0.50, help="Minimum proportion of mendelian errors in a single chromosome to plot idiogram. Default is 0.50.")
     parser.add_argument('fid', type=str, help="New family ID.")
     parser.add_argument('iid', type=str, help="New within-family ID.")
     parser.add_argument('father_id', type=str, help="New paternal within-family ID.")
@@ -220,9 +219,7 @@ def main():
     if df.shape[0] > 0:
         plot_idiogram(args.directory)
     else:
-        print('No disomy detected!')
-
-        
+        print('No disomy detected!')       
 
 if __name__ == "__main__":
     main()
