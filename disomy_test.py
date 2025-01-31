@@ -199,7 +199,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="Run PLINK commands for disomy tests.")
     parser.add_argument('--directory', type=str, default='.', help="Directory containing the .ped files. Default is the current directory.")
-    parser.add_argument('--prop_errors', type=bool, default=0.50, help="Minimum proportion of mendelian errors in a single chromosome to plot idiogram. Default is 0.50.")
+    parser.add_argument('--prop_errors', type=float, default=0.50, help="Minimum proportion of mendelian errors in a single chromosome to plot idiogram. Default is 0.50.")
     parser.add_argument('fid', type=str, help="New family ID.")
     parser.add_argument('iid', type=str, help="New within-family ID.")
     parser.add_argument('father_id', type=str, help="New paternal within-family ID.")
