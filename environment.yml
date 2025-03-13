@@ -1,13 +1,16 @@
-name: biohub_rnaseq
+name: disomy_test
 channels:
- - bioconda
- - conda-forge
- - r
- - defaults
+  - bioconda
+  - defaults
+  - conda-forge
+  - r
 dependencies:
   - python=3.11
   - pandas
   - matplotlib
   - psycopg2
   - r-base=4.4.0
+  #- r-BiocManager=3.19
+  #- r-readr
+  #- rpy2
   - plink
