@@ -3,13 +3,12 @@ channels:
   - bioconda
   - defaults
   - conda-forge
-  - r
 dependencies:
   - python=3.11
   - pandas
   - matplotlib
   - psycopg2
-  - r-base=4.4.0
+  - r-base=4.4.3
   #- r-BiocManager=3.19
   #- r-readr
   #- rpy2
